@@ -33,10 +33,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   const availableSubCategories = selectedCategory?.subs || [];
 
   const sidebarContent = (
-    <div className="h-full flex flex-col text-gray-700 dark:text-gray-200">
+    <div className="h-full flex flex-col text-black dark:text-gray-200">
       {isMobile && (
         <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
+          <h2 className="text-lg font-semibold text-black dark:text-gray-200">Filters</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
@@ -50,13 +50,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         {/* Main Categories */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+            <label className="block text-sm font-medium text-black dark:text-gray-200">
               Main Categories
             </label>
               {(selectedMainCategory || selectedSubCategory) && (
                 <button
                   onClick={onClearFilters}
-                  className="text-xs text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 font-medium"
+                  className="text-xs text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300 font-medium"
                 >
                   Clear all
                 </button>
@@ -92,7 +92,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         {/* Sub Categories */}
         {selectedMainCategory && availableSubCategories.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">
+            <label className="block text-sm font-medium text-black dark:text-gray-200 mb-3">
               Sub Categories
             </label>
             <div className="space-y-2">

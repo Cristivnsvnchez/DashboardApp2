@@ -212,7 +212,7 @@ function AppContent() {
                 </div>
                   <button
                     onClick={handleClearFilters}
-                    className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 font-medium text-sm"
+                    className="text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300 font-medium text-sm"
                   >
                     Clear all filters
                   </button>
