@@ -2,6 +2,8 @@
 
 This project is a simple React and TypeScript dashboard built with Vite and Tailwind CSS.
 
+The interface supports a light and dark theme. Use the sun/moon button in the header to toggle between modes. Your preference is saved in `localStorage`.
+
 ## Prerequisites
 
 - Node.js (version 18 or later)

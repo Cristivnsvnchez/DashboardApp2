@@ -41,13 +41,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   const availableSubCategories = selectedCategory?.subs || [];
 
   const sidebarContent = (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col text-gray-700 dark:text-gray-200">
       {isMobile && (
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -57,7 +57,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       <div className="flex-1 p-4 space-y-6">
         {/* Search */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
             Search Platforms
           </label>
           <div className="relative">
@@ -67,7 +67,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search by name or description..."
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
           </div>
         </div>
@@ -75,7 +75,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         {/* Main Categories */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               Main Categories
             </label>
             {(selectedMainCategory || selectedSubCategory || searchQuery) && (
@@ -93,7 +93,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                 !selectedMainCategory
                   ? 'bg-blue-100 text-blue-800 border border-blue-200'
-                  : 'hover:bg-gray-50'
+                  : 'hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               All Categories
@@ -105,7 +105,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 className={`w-full text-left px-3 py-2 rounded-lg transition-colors border ${
                   selectedMainCategory === category.main
                     ? colorVariants[category.color]
-                    : 'hover:bg-gray-50 border-transparent'
+                    : 'hover:bg-gray-50 dark:hover:bg-gray-700 border-transparent'
                 }`}
               >
                 {category.main}
@@ -117,7 +117,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         {/* Sub Categories */}
         {selectedMainCategory && availableSubCategories.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">
               Sub Categories
             </label>
             <div className="space-y-2">
@@ -125,8 +125,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 onClick={() => onSubCategoryChange('')}
                 className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                   !selectedSubCategory
-                    ? 'bg-gray-100 text-gray-800 border border-gray-200'
-                    : 'hover:bg-gray-50'
+                    ? 'bg-gray-100 text-gray-800 border border-gray-200 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600'
+                    : 'hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
                 All Sub Categories
@@ -138,7 +138,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   className={`w-full text-left px-3 py-2 rounded-lg transition-colors text-sm border ${
                     selectedSubCategory === sub
                       ? (selectedCategory ? colorVariants[selectedCategory.color] : '')
-                      : 'hover:bg-gray-50 border-transparent'
+                      : 'hover:bg-gray-50 dark:hover:bg-gray-700 border-transparent'
                   }`}
                 >
                   {sub}
@@ -158,7 +158,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={onClose} />
         )}
         <div
-          className={`fixed left-0 top-0 h-full w-80 bg-white border-r border-gray-200 shadow-xl z-50 transform transition-transform duration-300 ${
+          className={`fixed left-0 top-0 h-full w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-xl z-50 transform transition-transform duration-300 ${
             isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
@@ -169,7 +169,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   }
 
   return (
-    <div className="w-80 bg-white border-r border-gray-200 shadow-sm">
+    <div className="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-sm">
       {sidebarContent}
     </div>
   );

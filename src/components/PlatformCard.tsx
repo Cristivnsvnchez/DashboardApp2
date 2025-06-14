@@ -27,8 +27,8 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform }) => {
   const IconComponent = (Icons as any)[platform.icon] || Icons.Globe;
   
   return (
-    <div 
-      className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 overflow-hidden"
+    <div
+      className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700 overflow-hidden"
     >
       <div 
         className={`h-24 bg-gradient-to-br ${colorVariants[platform.color as keyof typeof colorVariants]} ${hoverVariants[platform.color as keyof typeof hoverVariants]} transition-all duration-300 flex items-center justify-center relative`}
@@ -41,19 +41,19 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform }) => {
       
       <div className="p-6">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="font-semibold text-gray-900 text-lg group-hover:text-gray-700 transition-colors">
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
             {platform.name}
           </h3>
         </div>
-        
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
           {platform.description}
         </p>
-        
+
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-xs font-medium text-gray-900">{platform.mainCategory}</span>
-            <span className="text-xs text-gray-500">{platform.subCategory}</span>
+            <span className="text-xs font-medium text-gray-900 dark:text-gray-100">{platform.mainCategory}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{platform.subCategory}</span>
           </div>
           
           <a
