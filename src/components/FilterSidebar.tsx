@@ -1,15 +1,13 @@
 import React from 'react';
-import { Search, Filter, X } from 'lucide-react';
+import { Filter, X } from 'lucide-react';
 import { Category, ColorVariant } from '../types';
 
 interface FilterSidebarProps {
   categories: Category[];
   selectedMainCategory: string;
   selectedSubCategory: string;
-  searchQuery: string;
   onMainCategoryChange: (category: string) => void;
   onSubCategoryChange: (subCategory: string) => void;
-  onSearchChange: (query: string) => void;
   onClearFilters: () => void;
   isMobile?: boolean;
   isOpen?: boolean;
@@ -28,10 +26,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   categories,
   selectedMainCategory,
   selectedSubCategory,
-  searchQuery,
   onMainCategoryChange,
   onSubCategoryChange,
-  onSearchChange,
   onClearFilters,
   isMobile = false,
   isOpen = true,
@@ -55,30 +51,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       )}
 
       <div className="flex-1 p-4 space-y-6">
-        {/* Search */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-            Search Platforms
-          </label>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search by name or description..."
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-            />
-          </div>
-        </div>
-
         {/* Main Categories */}
         <div>
           <div className="flex items-center justify-between mb-3">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               Main Categories
             </label>
-            {(selectedMainCategory || selectedSubCategory || searchQuery) && (
+            {(selectedMainCategory || selectedSubCategory) && (
               <button
                 onClick={onClearFilters}
                 className="text-xs text-blue-600 hover:text-blue-700 font-medium"
@@ -169,7 +148,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   }
 
   return (
-    <div className="w-80 bg-white/80 dark:bg-gray-800/60 backdrop-blur border-r border-gray-200 dark:border-gray-700 shadow-sm">
+    <div className="w-80 min-h-screen bg-white/80 dark:bg-gray-800/60 backdrop-blur border-r border-gray-200 dark:border-gray-700 shadow-sm">
       {sidebarContent}
     </div>
   );
