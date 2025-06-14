@@ -108,5 +108,15 @@ export const defaultPlatforms: Platform[] = [
     subCategory: 'Music',
     icon: 'Music',
     color: 'pink'
+  },
+  {
+    id: '9',
+    name: 'LinkedIn',
+    url: 'https://linkedin.com',
+    description: 'Professional networking platform',
+    mainCategory: 'Entertainment',
+    subCategory: 'Social Media',
+    icon: 'Linkedin',
+    color: 'pink'
   }
 ];
