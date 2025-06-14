@@ -1,6 +1,6 @@
 import React from 'react';
 import { Filter, X } from 'lucide-react';
-import { Category, ColorVariant } from '../types';
+import { Category } from '../types';
 
 interface FilterSidebarProps {
   categories: Category[];
@@ -14,13 +14,9 @@ interface FilterSidebarProps {
   onClose?: () => void;
 }
 
-const colorVariants: Record<ColorVariant, string> = {
-  orange: 'bg-orange-100 text-orange-800 border-orange-200',
-  pink: 'bg-pink-100 text-pink-800 border-pink-200',
-  blue: 'bg-blue-100 text-blue-800 border-blue-200',
-  purple: 'bg-purple-100 text-purple-800 border-purple-200',
-  green: 'bg-green-100 text-green-800 border-green-200'
-};
+const activeClass =
+  'bg-white/70 dark:bg-gray-700/50 backdrop-blur border border-white/40 dark:border-gray-600';
+
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   categories,
@@ -71,8 +67,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               onClick={() => onMainCategoryChange('')}
               className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                 !selectedMainCategory
-                  ? 'bg-primary/10 text-primary border border-primary/20'
-                  : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? activeClass
+                  : 'hover:bg-white/50 hover:backdrop-blur border border-transparent'
               }`}
             >
               All Categories
@@ -81,10 +77,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               <button
                 key={category.main}
                 onClick={() => onMainCategoryChange(category.main)}
-                className={`w-full text-left px-3 py-2 rounded-lg transition-colors border ${
+                className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                   selectedMainCategory === category.main
-                    ? colorVariants[category.color]
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700 border-transparent'
+                    ? activeClass
+                    : 'hover:bg-white/50 hover:backdrop-blur border border-transparent'
                 }`}
               >
                 {category.main}
@@ -104,8 +100,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 onClick={() => onSubCategoryChange('')}
                 className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                   !selectedSubCategory
-                    ? 'bg-gray-100 text-gray-800 border border-gray-200 dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+                    ? activeClass
+                    : 'hover:bg-white/50 hover:backdrop-blur border border-transparent'
                 }`}
               >
                 All Sub Categories
@@ -114,10 +110,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 <button
                   key={sub}
                   onClick={() => onSubCategoryChange(sub)}
-                  className={`w-full text-left px-3 py-2 rounded-lg transition-colors text-sm border ${
+                  className={`w-full text-left px-3 py-2 rounded-lg transition-colors text-sm ${
                     selectedSubCategory === sub
-                      ? (selectedCategory ? colorVariants[selectedCategory.color] : '')
-                      : 'hover:bg-gray-50 dark:hover:bg-gray-700 border-transparent'
+                      ? activeClass
+                      : 'hover:bg-white/50 hover:backdrop-blur border border-transparent'
                   }`}
                 >
                   {sub}
