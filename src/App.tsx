@@ -110,15 +110,15 @@ function AppContent() {
   if (!isAuthenticated) return <LoginPage />;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-300 to-blue-500 dark:from-gray-800 dark:via-gray-900 dark:to-black flex">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--color-secondary)] via-[var(--color-accent)] to-[var(--color-primary)] dark:from-gray-800 dark:via-gray-900 dark:to-black flex">
       <div className="flex-1 flex flex-col min-h-screen">
         <header className="bg-white/80 dark:bg-gray-800/70 backdrop-blur border-b border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <LayoutDashboard className="w-6 h-6 text-blue-600" />
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <LayoutDashboard className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Platform Dashboard</h1>
@@ -145,21 +145,21 @@ function AppContent() {
                 </button>
                 <button
                   onClick={() => setIsAddModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600/40 backdrop-blur-md text-white rounded-lg hover:bg-blue-600/50 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-primary/40 backdrop-blur-md text-white rounded-lg hover:bg-primary/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Platform</span>
                 </button>
                 <button
                   onClick={() => setIsAddCategoryModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-green-600/40 backdrop-blur-md text-white rounded-lg hover:bg-green-600/50 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-secondary/40 backdrop-blur-md text-white rounded-lg hover:bg-secondary/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Category</span>
                 </button>
                 <button
                   onClick={() => setIsAddSubCategoryModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-purple-600/40 backdrop-blur-md text-white rounded-lg hover:bg-purple-600/50 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-accent/40 backdrop-blur-md text-white rounded-lg hover:bg-accent/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Sub Category</span>
@@ -189,24 +189,24 @@ function AppContent() {
           </div>
 
           {(selectedMainCategory || selectedSubCategory) && (
-            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="mb-6 p-4 bg-primary/5 border border-primary/20 rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2 text-sm">
-                  <span className="text-blue-800 font-medium">Active filters:</span>
+                  <span className="text-primary font-medium">Active filters:</span>
                   {selectedMainCategory && (
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                    <span className="px-2 py-1 bg-primary/10 text-primary rounded">
                       {selectedMainCategory}
                     </span>
                   )}
                   {selectedSubCategory && (
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                    <span className="px-2 py-1 bg-primary/10 text-primary rounded">
                       {selectedSubCategory}
                     </span>
                   )}
                 </div>
                 <button
                   onClick={handleClearFilters}
-                  className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                  className="text-primary hover:text-primary/80 font-medium text-sm"
                 >
                   Clear all filters
                 </button>

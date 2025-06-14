@@ -66,7 +66,7 @@ export const AddSubCategoryModal: React.FC<AddSubCategoryModalProps> = ({
               ref={firstFieldRef}
               value={formData.main}
               onChange={e => setFormData(prev => ({ ...prev, main: e.target.value }))}
-              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               required
             >
               <option value="">Select category</option>
@@ -86,7 +86,7 @@ export const AddSubCategoryModal: React.FC<AddSubCategoryModalProps> = ({
               type="text"
               value={formData.sub}
               onChange={e => setFormData(prev => ({ ...prev, sub: e.target.value }))}
-              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               placeholder="e.g., Collaboration"
               required
             />
@@ -102,7 +102,7 @@ export const AddSubCategoryModal: React.FC<AddSubCategoryModalProps> = ({
             </button>
             <button
               type="submit"
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors flex items-center space-x-2"
+              className="px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 font-medium transition-colors flex items-center space-x-2"
             >
               <Plus className="w-4 h-4" />
               <span>Add Sub Category</span>

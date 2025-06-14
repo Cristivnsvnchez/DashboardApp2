@@ -108,7 +108,7 @@ export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
                 type="text"
                 value={formData.name}
                 onChange={e => setFormData(prev => (prev ? { ...prev, name: e.target.value } : prev))}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 placeholder="e.g., GitHub"
                 required
               />
@@ -122,7 +122,7 @@ export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
                 type="url"
                 value={formData.url}
                 onChange={e => setFormData(prev => (prev ? { ...prev, url: e.target.value } : prev))}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 placeholder="https://example.com"
                 required
               />
@@ -137,7 +137,7 @@ export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
               value={formData.description}
               onChange={e => setFormData(prev => (prev ? { ...prev, description: e.target.value } : prev))}
               rows={3}
-              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
               placeholder="Brief description of the platform..."
             />
           </div>
@@ -150,7 +150,7 @@ export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
               <select
                 value={formData.mainCategory}
                 onChange={e => handleMainCategoryChange(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 required
               >
                 <option value="">Select category</option>
@@ -169,7 +169,7 @@ export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
               <select
                 value={formData.subCategory}
                 onChange={e => setFormData(prev => (prev ? { ...prev, subCategory: e.target.value } : prev))}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 disabled={!formData.mainCategory}
               >
                 <option value="">None</option>
@@ -196,7 +196,7 @@ export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
                     onClick={() => setFormData(prev => (prev ? { ...prev, icon: iconName } : prev))}
                     className={`p-3 rounded-lg border-2 transition-all hover:scale-105 ${
                       formData.icon === iconName
-                        ? 'border-blue-500 bg-blue-50'
+                        ? 'border-primary bg-primary/10'
                         : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
                     }`}
                     aria-label={iconName}
@@ -219,7 +219,7 @@ export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
             </button>
             <button
               type="submit"
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors flex items-center space-x-2"
+              className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium transition-colors flex items-center space-x-2"
             >
               <Pencil className="w-4 h-4" />
               <span>Update Platform</span>
