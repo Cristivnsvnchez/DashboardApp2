@@ -60,7 +60,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             {(selectedMainCategory || selectedSubCategory) && (
               <button
                 onClick={onClearFilters}
-                className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+                className="text-xs text-primary hover:text-primary/80 font-medium"
               >
                 Clear all
               </button>
@@ -71,7 +71,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               onClick={() => onMainCategoryChange('')}
               className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                 !selectedMainCategory
-                  ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                  ? 'bg-primary/10 text-primary border border-primary/20'
                   : 'hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >

@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-primary: #5A8DEE;
+  --color-secondary: #9B5DE5;
+  --color-accent: #61D9D4;
+  --color-background: #F6F6F6;
+  --color-text: #2B2B2B;
+}
+
+.dark {
+  --color-background: #1E1E1E;
+  --color-text: #FFFFFF;
+}
+
+.glass {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
