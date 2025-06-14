@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Plus } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { Platform, Category } from '../types';
@@ -22,6 +22,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
   onAdd,
   categories
 }) => {
+  const firstFieldRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<Omit<Platform, 'id'>>({
     name: '',
     url: '',
@@ -33,6 +34,16 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
   });
 
   const [availableSubCategories, setAvailableSubCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    firstFieldRef.current?.focus();
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [isOpen, onClose]);
 
   const handleMainCategoryChange = (mainCategory: string) => {
     const category = categories.find(cat => cat.main === mainCategory);
@@ -66,7 +77,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true">
       <div className="bg-white/80 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-700">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Add New Platform</h2>
@@ -87,6 +98,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
                 Platform Name *
               </label>
               <input
+                ref={firstFieldRef}
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}

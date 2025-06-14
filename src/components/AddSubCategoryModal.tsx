@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Plus } from 'lucide-react';
 import { Category } from '../types';
 
@@ -15,10 +15,21 @@ export const AddSubCategoryModal: React.FC<AddSubCategoryModalProps> = ({
   categories,
   onAdd
 }) => {
+  const firstFieldRef = useRef<HTMLSelectElement | null>(null);
   const [formData, setFormData] = useState<{ main: string; sub: string }>({
     main: '',
     sub: ''
   });
+
+  useEffect(() => {
+    if (!isOpen) return;
+    firstFieldRef.current?.focus();
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [isOpen, onClose]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +43,7 @@ export const AddSubCategoryModal: React.FC<AddSubCategoryModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true">
       <div className="bg-white/80 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-lg">
         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-700">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Add Sub Category</h2>
@@ -52,6 +63,7 @@ export const AddSubCategoryModal: React.FC<AddSubCategoryModalProps> = ({
               Category *
             </label>
             <select
+              ref={firstFieldRef}
               value={formData.main}
               onChange={e => setFormData(prev => ({ ...prev, main: e.target.value }))}
               className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
