@@ -28,7 +28,7 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform }) => {
   
   return (
     <div
-      className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700 overflow-hidden"
+      className="group bg-white/80 dark:bg-gray-800/60 backdrop-blur rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-white/60 dark:border-gray-700 overflow-hidden"
     >
       <div 
         className={`h-24 bg-gradient-to-br ${colorVariants[platform.color as keyof typeof colorVariants]} ${hoverVariants[platform.color as keyof typeof hoverVariants]} transition-all duration-300 flex items-center justify-center relative`}
