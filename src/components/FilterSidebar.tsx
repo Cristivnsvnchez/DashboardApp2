@@ -158,7 +158,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={onClose} />
         )}
         <div
-          className={`fixed left-0 top-0 h-full w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-xl z-50 transform transition-transform duration-300 ${
+          className={`fixed left-0 top-0 h-full w-80 bg-white/80 dark:bg-gray-800/70 backdrop-blur border-r border-gray-200 dark:border-gray-700 shadow-xl z-50 transform transition-transform duration-300 ${
             isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
@@ -169,7 +169,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   }
 
   return (
-    <div className="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-sm">
+    <div className="w-80 bg-white/80 dark:bg-gray-800/60 backdrop-blur border-r border-gray-200 dark:border-gray-700 shadow-sm">
       {sidebarContent}
     </div>
   );
