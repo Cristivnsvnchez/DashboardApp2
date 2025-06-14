@@ -119,21 +119,21 @@ function App() {
                 </button>
                 <button
                   onClick={() => setIsAddModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600/40 backdrop-blur-md text-white rounded-lg hover:bg-blue-600/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Platform</span>
                 </button>
                 <button
                   onClick={() => setIsAddCategoryModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-green-600/40 backdrop-blur-md text-white rounded-lg hover:bg-green-600/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Category</span>
                 </button>
                 <button
                   onClick={() => setIsAddSubCategoryModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-purple-600/40 backdrop-blur-md text-white rounded-lg hover:bg-purple-600/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Sub Category</span>
