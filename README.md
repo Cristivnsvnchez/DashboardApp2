@@ -43,3 +43,8 @@ Preview the production build locally:
 ```bash
 npm run preview
 ```
+
+## Single Sign-On
+
+This project now includes a simple example of Microsoft single sign-on using MSAL.
+Update `src/authConfig.ts` with your Azure application client ID before running the app.
