@@ -7,13 +7,15 @@ interface AddSubCategoryModalProps {
   onClose: () => void;
   categories: Category[];
   onAdd: (mainCategory: string, subCategory: string) => void;
+  onDelete: (main: string, sub: string) => void;
 }
 
 export const AddSubCategoryModal: React.FC<AddSubCategoryModalProps> = ({
   isOpen,
   onClose,
   categories,
-  onAdd
+  onAdd,
+  onDelete
 }) => {
   const firstFieldRef = useRef<HTMLSelectElement | null>(null);
   const [formData, setFormData] = useState<{ main: string; sub: string }>({
@@ -109,6 +111,20 @@ export const AddSubCategoryModal: React.FC<AddSubCategoryModalProps> = ({
             </button>
           </div>
         </form>
+        <div className="p-6 pt-0">
+          <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-gray-100">Delete Sub Category</h3>
+          {formData.main && (
+            <ul className="space-y-2 max-h-40 overflow-y-auto">
+              {categories
+                .find(cat => cat.main === formData.main)?.subs.map(sub => (
+                  <li key={sub} className="flex justify-between items-center bg-white/60 dark:bg-gray-700/50 px-3 py-1 rounded">
+                    <span>{sub}</span>
+                    <button type="button" onClick={() => onDelete(formData.main, sub)} className="text-red-600 hover:underline text-sm">Delete</button>
+                  </li>
+                ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

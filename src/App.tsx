@@ -13,6 +13,7 @@ import { EditPlatformModal } from './components/EditPlatformModal';
 import { AddSubCategoryModal } from './components/AddSubCategoryModal';
 import { Toast } from './components/Toast';
 import { SearchInput } from './components/SearchInput';
+import { SideBanner } from './components/SideBanner';
 import { Platform, Category } from './types';
 import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
@@ -92,6 +93,27 @@ function AppContent() {
     setToastMessage('Sub category added');
   };
 
+  const handleDeletePlatform = (id: string) => {
+    setPlatforms(prev => prev.filter(p => p.id !== id));
+    setToastMessage('Platform deleted');
+  };
+
+  const handleDeleteCategory = (main: string) => {
+    setCategories(prev => prev.filter(c => c.main !== main));
+    setToastMessage('Category deleted');
+  };
+
+  const handleDeleteSubCategory = (main: string, sub: string) => {
+    setCategories(prev =>
+      prev.map(cat =>
+        cat.main === main
+          ? { ...cat, subs: cat.subs.filter(s => s !== sub) }
+          : cat
+      )
+    );
+    setToastMessage('Sub category deleted');
+  };
+
   const handleUpdatePlatform = (updated: Platform) => {
     setPlatforms(prev => prev.map(p => (p.id === updated.id ? updated : p)));
     setToastMessage('Platform updated');
@@ -111,6 +133,11 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[var(--color-secondary)] via-[var(--color-accent)] to-[var(--color-primary)] dark:from-gray-800 dark:via-gray-900 dark:to-black flex">
+      <SideBanner
+        onAddPlatform={() => setIsAddModalOpen(true)}
+        onAddCategory={() => setIsAddCategoryModalOpen(true)}
+        onAddSubCategory={() => setIsAddSubCategoryModalOpen(true)}
+      />
       <div className="flex-1 flex flex-col min-h-screen">
         <header className="bg-white/80 dark:bg-gray-800/70 backdrop-blur border-b border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
@@ -142,27 +169,6 @@ function AppContent() {
                   aria-label="Toggle dark mode"
                 >
                   {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                </button>
-                <button
-                  onClick={() => setIsAddModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-primary/40 backdrop-blur-md text-gray-900 dark:text-white rounded-lg hover:bg-primary/50 transition-colors font-medium shadow-sm hover:shadow-md"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Add Platform</span>
-                </button>
-                <button
-                  onClick={() => setIsAddCategoryModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-secondary/40 backdrop-blur-md text-gray-900 dark:text-white rounded-lg hover:bg-secondary/50 transition-colors font-medium shadow-sm hover:shadow-md"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Add Category</span>
-                </button>
-                <button
-                  onClick={() => setIsAddSubCategoryModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-accent/40 backdrop-blur-md text-gray-900 dark:text-white rounded-lg hover:bg-accent/50 transition-colors font-medium shadow-sm hover:shadow-md"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">Add Sub Category</span>
                 </button>
               </div>
             </div>
@@ -232,6 +238,8 @@ function AppContent() {
           isOpen={isAddModalOpen}
           onClose={() => setIsAddModalOpen(false)}
           onAdd={handleAddPlatform}
+          onDelete={handleDeletePlatform}
+          platforms={platforms}
           categories={categories}
         />
         <EditPlatformModal
@@ -248,12 +256,15 @@ function AppContent() {
           isOpen={isAddCategoryModalOpen}
           onClose={() => setIsAddCategoryModalOpen(false)}
           onAdd={handleAddCategory}
+          onDelete={handleDeleteCategory}
+          categories={categories}
         />
         <AddSubCategoryModal
           isOpen={isAddSubCategoryModalOpen}
           onClose={() => setIsAddSubCategoryModalOpen(false)}
           categories={categories}
           onAdd={handleAddSubCategory}
+          onDelete={handleDeleteSubCategory}
         />
         {toastMessage && <Toast message={toastMessage} onClose={() => setToastMessage('')} />}
       </div>
