@@ -2,6 +2,7 @@ import { useMsal } from '@azure/msal-react';
 import { loginRequest } from './authConfig';
 import { useState } from 'react';
 import { LogIn, Loader2 } from 'lucide-react';
+import DashAppLogo from './assets/DashApp.png';
 
 export default function LoginPage() {
   const { instance } = useMsal();
@@ -19,6 +20,11 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[var(--color-secondary)] via-[var(--color-accent)] to-[var(--color-primary)] dark:from-gray-800 dark:via-gray-900 dark:to-black p-4">
       <div className="bg-white/90 dark:bg-gray-800/80 backdrop-blur rounded-2xl shadow-xl p-8 w-full max-w-md space-y-6 text-center">
+        <img
+          src={DashAppLogo}
+          alt="Dashboard App logo"
+          className="mx-auto w-24 h-auto"
+        />
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Platform Dashboard</h1>
           <p className="text-gray-600 dark:text-gray-300">Sign in to continue</p>
