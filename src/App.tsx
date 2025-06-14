@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Plus, Menu, LayoutDashboard } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Plus, Menu, LayoutDashboard, Sun, Moon } from 'lucide-react';
 import { PlatformCard } from './components/PlatformCard';
 import { AddPlatformModal } from './components/AddPlatformModal';
 import { FilterSidebar } from './components/FilterSidebar';
@@ -13,6 +13,24 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark') {
+      setIsDarkMode(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
   const filteredPlatforms = useMemo(() => {
     return platforms.filter(platform => {
@@ -46,7 +64,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <FilterSidebar
@@ -79,13 +97,13 @@ function App() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 shadow-sm">
+        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <button
                   onClick={() => setIsMobileSidebarOpen(true)}
-                  className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                 >
                   <Menu className="w-5 h-5" />
                 </button>
@@ -102,13 +120,26 @@ function App() {
                 </div>
               </div>
               
-              <button
-                onClick={() => setIsAddModalOpen(true)}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow-md"
-              >
-                <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">Add Platform</span>
-              </button>
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => setIsDarkMode(!isDarkMode)}
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                  aria-label="Toggle dark mode"
+                >
+                  {isDarkMode ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                </button>
+                <button
+                  onClick={() => setIsAddModalOpen(true)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow-md"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="hidden sm:inline">Add Platform</span>
+                </button>
+              </div>
             </div>
           </div>
         </header>
