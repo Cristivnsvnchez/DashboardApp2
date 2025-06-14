@@ -46,7 +46,6 @@ npm run preview
 
 ## Single Sign-On
 
-This project now includes a Microsoft single sign-on flow. When the app starts,
-unauthenticated users see a dedicated login page with a "Sign in with Microsoft"
-button. Update `src/authConfig.ts` with your Azure application client ID before
-running the app.
+This project now includes a Microsoft single sign-on (SSO) flow using MSAL.  
+When the app starts, unauthenticated users see a dedicated login page with a **"Sign in with Microsoft"** button.  
+Make sure to update `src/authConfig.ts` with your **Azure application client ID** before running the app.
