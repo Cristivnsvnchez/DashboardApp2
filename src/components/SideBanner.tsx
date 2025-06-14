@@ -13,7 +13,7 @@ export const SideBanner: React.FC<SideBannerProps> = ({
   onAddSubCategory,
 }) => {
   return (
-    <div className="w-64 min-h-screen bg-white/80 dark:bg-gray-800/70 backdrop-blur border-r border-gray-200 dark:border-gray-700 p-4 space-y-4">
+    <div className="w-64 min-h-screen bg-white/80 dark:bg-gray-800/70 backdrop-blur border-r border-gray-200 dark:border-gray-700 pt-2 px-4 pb-4 space-y-4">
       <img
         src={DashAppLogo}
         alt="Dashboard App logo"
