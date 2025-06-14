@@ -95,11 +95,7 @@ function App() {
         <header className="bg-white/80 dark:bg-gray-800/70 backdrop-blur border-b border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <p className="text-sm text-gray-600">
-                  {filteredPlatforms.length} of {platforms.length} platforms
-                </p>
-              </div>
+              <div />
 
               <div className="flex items-center space-x-4">
                 <button
@@ -137,15 +133,18 @@ function App() {
 
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
-            <FilterDropdown
-              categories={categories}
-              selectedMainCategory={selectedMainCategory}
-              selectedSubCategory={selectedSubCategory}
-              onMainCategoryChange={handleMainCategoryChange}
-              onSubCategoryChange={setSelectedSubCategory}
-              onClearFilters={handleClearFilters}
-            />
-          </div>
+          <FilterDropdown
+            categories={categories}
+            selectedMainCategory={selectedMainCategory}
+            selectedSubCategory={selectedSubCategory}
+            onMainCategoryChange={handleMainCategoryChange}
+            onSubCategoryChange={setSelectedSubCategory}
+            onClearFilters={handleClearFilters}
+          />
+          <p className="text-sm text-gray-600 mt-2">
+            {filteredPlatforms.length} of {platforms.length} platforms
+          </p>
+        </div>
 
           {(selectedMainCategory || selectedSubCategory) && (
             <div className="mb-6 p-4 bg-primary/5 border border-primary/20 rounded-lg">
