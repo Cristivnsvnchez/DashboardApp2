@@ -10,7 +10,6 @@ function App() {
   const [platforms, setPlatforms] = useState<Platform[]>(defaultPlatforms);
   const [selectedMainCategory, setSelectedMainCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -34,15 +33,14 @@ function App() {
 
   const filteredPlatforms = useMemo(() => {
     return platforms.filter(platform => {
-      const matchesMainCategory = !selectedMainCategory || platform.mainCategory === selectedMainCategory;
-      const matchesSubCategory = !selectedSubCategory || platform.subCategory === selectedSubCategory;
-      const matchesSearch = !searchQuery || 
-        platform.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        platform.description.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      return matchesMainCategory && matchesSubCategory && matchesSearch;
+      const matchesMainCategory = !selectedMainCategory ||
+        platform.mainCategory === selectedMainCategory;
+      const matchesSubCategory = !selectedSubCategory ||
+        platform.subCategory === selectedSubCategory;
+
+      return matchesMainCategory && matchesSubCategory;
     });
-  }, [platforms, selectedMainCategory, selectedSubCategory, searchQuery]);
+  }, [platforms, selectedMainCategory, selectedSubCategory]);
 
   const handleAddPlatform = (newPlatform: Omit<Platform, 'id'>) => {
     const platform: Platform = {
@@ -55,7 +53,6 @@ function App() {
   const handleClearFilters = () => {
     setSelectedMainCategory('');
     setSelectedSubCategory('');
-    setSearchQuery('');
   };
 
   const handleMainCategoryChange = (category: string) => {
@@ -71,10 +68,8 @@ function App() {
           categories={categories}
           selectedMainCategory={selectedMainCategory}
           selectedSubCategory={selectedSubCategory}
-          searchQuery={searchQuery}
           onMainCategoryChange={handleMainCategoryChange}
           onSubCategoryChange={setSelectedSubCategory}
-          onSearchChange={setSearchQuery}
           onClearFilters={handleClearFilters}
         />
       </div>
@@ -84,10 +79,8 @@ function App() {
         categories={categories}
         selectedMainCategory={selectedMainCategory}
         selectedSubCategory={selectedSubCategory}
-        searchQuery={searchQuery}
         onMainCategoryChange={handleMainCategoryChange}
         onSubCategoryChange={setSelectedSubCategory}
-        onSearchChange={setSearchQuery}
         onClearFilters={handleClearFilters}
         isMobile
         isOpen={isMobileSidebarOpen}
@@ -112,7 +105,7 @@ function App() {
                     <LayoutDashboard className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Platform Dashboard</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Platform Dashboard</h1>
                     <p className="text-sm text-gray-600">
                       {filteredPlatforms.length} of {platforms.length} platforms
                     </p>
@@ -147,16 +140,11 @@ function App() {
         {/* Content */}
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
           {/* Active Filters */}
-          {(selectedMainCategory || selectedSubCategory || searchQuery) && (
+          {(selectedMainCategory || selectedSubCategory) && (
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2 text-sm">
                   <span className="text-blue-800 font-medium">Active filters:</span>
-                  {searchQuery && (
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                      Search: "{searchQuery}"
-                    </span>
-                  )}
                   {selectedMainCategory && (
                     <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded">
                       {selectedMainCategory}
@@ -193,8 +181,8 @@ function App() {
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No platforms found</h3>
                 <p className="text-gray-600 mb-6">
-                  {searchQuery || selectedMainCategory || selectedSubCategory
-                    ? 'Try adjusting your filters or search query.'
+                  {selectedMainCategory || selectedSubCategory
+                    ? 'Try adjusting your filters.'
                     : 'Get started by adding your first platform.'}
                 </p>
                 <button
