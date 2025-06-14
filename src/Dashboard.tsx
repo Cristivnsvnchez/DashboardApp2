@@ -6,7 +6,6 @@ import { AddCategoryModal } from './components/AddCategoryModal';
 import { FilterDropdown } from './components/FilterDropdown';
 import { EditPlatformModal } from './components/EditPlatformModal';
 import { AddSubCategoryModal } from './components/AddSubCategoryModal';
-import { Toast } from './components/Toast';
 import { Platform, Category } from './types';
 import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
@@ -24,8 +23,6 @@ function App() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [platformToEdit, setPlatformToEdit] = useState<Platform | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [search, setSearch] = useState('');
-  const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
     const stored = localStorage.getItem('theme');
@@ -52,10 +49,9 @@ function App() {
     return platforms.filter(platform => {
       const matchesMainCategory = !selectedMainCategory || platform.mainCategory === selectedMainCategory;
       const matchesSubCategory = !selectedSubCategory || platform.subCategory === selectedSubCategory;
-      const matchesSearch = platform.name.toLowerCase().includes(search.toLowerCase());
-      return matchesMainCategory && matchesSubCategory && matchesSearch;
+      return matchesMainCategory && matchesSubCategory;
     });
-  }, [platforms, selectedMainCategory, selectedSubCategory, search]);
+  }, [platforms, selectedMainCategory, selectedSubCategory]);
 
   const handleAddPlatform = (newPlatform: Omit<Platform, 'id'>) => {
     const platform: Platform = {
@@ -63,12 +59,10 @@ function App() {
       id: Date.now().toString(),
     };
     setPlatforms(prev => [...prev, platform]);
-    setToastMessage('Platform added');
   };
 
   const handleAddCategory = (category: Category) => {
     setCategories(prev => [...prev, category]);
-    setToastMessage('Category added');
   };
 
   const handleAddSubCategory = (main: string, sub: string) => {
@@ -79,12 +73,10 @@ function App() {
           : cat
       )
     );
-    setToastMessage('Sub category added');
   };
 
   const handleUpdatePlatform = (updated: Platform) => {
     setPlatforms(prev => prev.map(p => (p.id === updated.id ? updated : p)));
-    setToastMessage('Platform updated');
   };
 
   const handleClearFilters = () => {
@@ -116,14 +108,8 @@ function App() {
                   </div>
                 </div>
               </div>
+
               <div className="flex items-center space-x-4">
-                <input
-                  type="text"
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  placeholder="Search..."
-                  className="hidden md:block px-3 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100"
-                />
                 <button
                   onClick={() => setIsDarkMode(!isDarkMode)}
                   className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -158,14 +144,7 @@ function App() {
         </header>
 
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
-          <div className="mb-6 space-y-4">
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search..."
-              className="md:hidden w-full px-3 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100"
-            />
+          <div className="mb-6">
             <FilterDropdown
               categories={categories}
               selectedMainCategory={selectedMainCategory}
@@ -202,49 +181,71 @@ function App() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredPlatforms.map(platform => (
-              <PlatformCard
-                key={platform.id}
-                platform={platform}
-                onEdit={p => {
-                  setPlatformToEdit(p);
-                  setIsEditModalOpen(true);
-                }}
-              />
-            ))}
-          </div>
+          {filteredPlatforms.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredPlatforms.map(platform => (
+                <PlatformCard
+                  key={platform.id}
+                  platform={platform}
+                  onEdit={p => {
+                    setPlatformToEdit(p);
+                    setIsEditModalOpen(true);
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <div className="max-w-md mx-auto">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <LayoutDashboard className="w-8 h-8 text-gray-400" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No platforms found</h3>
+                <p className="text-gray-600 mb-6">
+                  {selectedMainCategory || selectedSubCategory
+                    ? 'Try adjusting your filters.'
+                    : 'Get started by adding your first platform.'}
+                </p>
+                <button
+                  onClick={() => setIsAddModalOpen(true)}
+                  className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Platform</span>
+                </button>
+              </div>
+            </div>
+          )}
         </main>
-
-        <AddPlatformModal
-          isOpen={isAddModalOpen}
-          onClose={() => setIsAddModalOpen(false)}
-          onAdd={handleAddPlatform}
-          categories={categories}
-        />
-        <EditPlatformModal
-          isOpen={isEditModalOpen}
-          onClose={() => {
-            setIsEditModalOpen(false);
-            setPlatformToEdit(null);
-          }}
-          onSave={handleUpdatePlatform}
-          categories={categories}
-          platform={platformToEdit}
-        />
-        <AddCategoryModal
-          isOpen={isAddCategoryModalOpen}
-          onClose={() => setIsAddCategoryModalOpen(false)}
-          onAdd={handleAddCategory}
-        />
-        <AddSubCategoryModal
-          isOpen={isAddSubCategoryModalOpen}
-          onClose={() => setIsAddSubCategoryModalOpen(false)}
-          categories={categories}
-          onAdd={handleAddSubCategory}
-        />
-        {toastMessage && <Toast message={toastMessage} onClose={() => setToastMessage('')} />}
       </div>
+
+      <AddPlatformModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAdd={handleAddPlatform}
+        categories={categories}
+      />
+      <EditPlatformModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setPlatformToEdit(null);
+        }}
+        onSave={handleUpdatePlatform}
+        categories={categories}
+        platform={platformToEdit}
+      />
+      <AddCategoryModal
+        isOpen={isAddCategoryModalOpen}
+        onClose={() => setIsAddCategoryModalOpen(false)}
+        onAdd={handleAddCategory}
+      />
+      <AddSubCategoryModal
+        isOpen={isAddSubCategoryModalOpen}
+        onClose={() => setIsAddSubCategoryModalOpen(false)}
+        categories={categories}
+        onAdd={handleAddSubCategory}
+      />
     </div>
   );
 }
