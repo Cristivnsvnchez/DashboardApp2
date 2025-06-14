@@ -1,3 +1,8 @@
+import { MsalProvider, useIsAuthenticated } from '@azure/msal-react';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { msalConfig } from './authConfig';
+import Dashboard from './Dashboard';
+import LoginPage from './LoginPage';
 import React, { useState, useMemo, useEffect } from 'react';
 import { Plus, LayoutDashboard, Sun, Moon } from 'lucide-react';
 import { PlatformCard } from './components/PlatformCard';
@@ -10,7 +15,9 @@ import { Toast } from './components/Toast';
 import { Platform, Category } from './types';
 import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
-function App() {
+const msalInstance = new PublicClientApplication(msalConfig);
+
+function AppContent() {
   const [platforms, setPlatforms] = useState<Platform[]>(defaultPlatforms);
   const [categories, setCategories] = useState<Category[]>(() => {
     const stored = localStorage.getItem('categories');
@@ -26,6 +33,8 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [search, setSearch] = useState('');
   const [toastMessage, setToastMessage] = useState('');
+
+  const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
     const stored = localStorage.getItem('theme');
@@ -96,6 +105,8 @@ function App() {
     setSelectedMainCategory(category);
     setSelectedSubCategory('');
   };
+
+  if (!isAuthenticated) return <LoginPage />;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-300 to-blue-500 dark:from-gray-800 dark:via-gray-900 dark:to-black flex">
@@ -249,4 +260,10 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <MsalProvider instance={msalInstance}>
+      <AppContent />
+    </MsalProvider>
+  );
+}
