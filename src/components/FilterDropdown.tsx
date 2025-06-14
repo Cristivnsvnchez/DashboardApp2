@@ -26,7 +26,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({
       <select
         value={selectedMainCategory}
         onChange={e => onMainCategoryChange(e.target.value)}
-        className="px-3 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100"
+        className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-black dark:bg-gray-700 dark:text-gray-100"
       >
         <option value="">All Categories</option>
         {categories.map(category => (
@@ -40,7 +40,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({
         <select
           value={selectedSubCategory}
           onChange={e => onSubCategoryChange(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100"
+          className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-black dark:bg-gray-700 dark:text-gray-100"
         >
           <option value="">All Sub Categories</option>
           {availableSubCategories.map(sub => (
@@ -54,7 +54,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({
       {(selectedMainCategory || selectedSubCategory) && (
         <button
           onClick={onClearFilters}
-          className="text-sm text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+          className="text-sm text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
         >
           Clear
         </button>
