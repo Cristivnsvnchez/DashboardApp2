@@ -142,11 +142,7 @@ function AppContent() {
         <header className="bg-white/80 dark:bg-gray-800/70 backdrop-blur border-b border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <p className="text-sm text-gray-600">
-                  {filteredPlatforms.length} of {platforms.length} platforms
-                </p>
-              </div>
+              <div />
               <div className="flex items-center space-x-4">
                 <SearchInput
                   value={search}
@@ -184,6 +180,9 @@ function AppContent() {
               onSubCategoryChange={setSelectedSubCategory}
               onClearFilters={handleClearFilters}
             />
+            <p className="text-sm text-gray-600">
+              {filteredPlatforms.length} of {platforms.length} platforms
+            </p>
           </div>
 
           {(selectedMainCategory || selectedSubCategory) && (
