@@ -17,7 +17,7 @@ export const SideBanner: React.FC<SideBannerProps> = ({
       <img
         src={DashAppLogo}
         alt="Dashboard App logo"
-        className="w-28 h-auto mx-auto mb-2"
+        className="w-35 h-auto mx-auto mb-2"
       />
       <button
         onClick={onAddPlatform}
