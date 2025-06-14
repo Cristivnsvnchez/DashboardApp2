@@ -1,4 +1,4 @@
-export type ColorVariant = 'orange' | 'pink' | 'blue' | 'purple' | 'green';
+export type ColorVariant = 'primary';
 
 export interface Platform {
   id: string;

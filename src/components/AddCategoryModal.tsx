@@ -35,7 +35,7 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({ isOpen, onCl
       .map(s => s.trim())
       .filter(Boolean);
 
-    onAdd({ main: formData.main.trim(), subs: subsArray, color: 'blue' });
+    onAdd({ main: formData.main.trim(), subs: subsArray, color: 'primary' });
     setFormData({ main: '', subs: '' });
     onClose();
   };

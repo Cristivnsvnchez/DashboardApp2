@@ -4,27 +4,27 @@ export const categories: Category[] = [
   {
     main: 'Productivity',
     subs: ['Task Management', 'Note Taking', 'Time Tracking', 'Communication', 'File Storage'],
-    color: 'orange'
+    color: 'primary'
   },
   {
     main: 'Entertainment',
     subs: ['Streaming', 'Gaming', 'Social Media', 'Music', 'Reading'],
-    color: 'pink'
+    color: 'primary'
   },
   {
     main: 'Learning',
     subs: ['Coding', 'Languages', 'Courses', 'Documentation', 'Tutorials'],
-    color: 'blue'
+    color: 'primary'
   },
   {
     main: 'Design',
     subs: ['Graphics', 'UI/UX', 'Photography', 'Icons', 'Inspiration'],
-    color: 'purple'
+    color: 'primary'
   },
   {
     main: 'Development',
     subs: ['Code Editors', 'Version Control', 'Hosting', 'APIs', 'Tools'],
-    color: 'green'
+    color: 'primary'
   }
 ];
 
@@ -37,7 +37,7 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Development',
     subCategory: 'Version Control',
     icon: 'Github',
-    color: 'green'
+    color: 'primary'
   },
   {
     id: '2',
@@ -47,7 +47,7 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Productivity',
     subCategory: 'Note Taking',
     icon: 'FileText',
-    color: 'orange'
+    color: 'primary'
   },
   {
     id: '3',
@@ -57,7 +57,7 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Design',
     subCategory: 'UI/UX',
     icon: 'Figma',
-    color: 'purple'
+    color: 'primary'
   },
   {
     id: '4',
@@ -67,7 +67,7 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Entertainment',
     subCategory: 'Streaming',
     icon: 'Play',
-    color: 'pink'
+    color: 'primary'
   },
   {
     id: '5',
@@ -77,7 +77,7 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Learning',
     subCategory: 'Languages',
     icon: 'BookOpen',
-    color: 'blue'
+    color: 'primary'
   },
   {
     id: '6',
@@ -87,7 +87,7 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Development',
     subCategory: 'Code Editors',
     icon: 'Code',
-    color: 'green'
+    color: 'primary'
   },
   {
     id: '7',
@@ -97,7 +97,7 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Productivity',
     subCategory: 'Task Management',
     icon: 'Kanban',
-    color: 'orange'
+    color: 'primary'
   },
   {
     id: '8',
@@ -107,7 +107,7 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Entertainment',
     subCategory: 'Music',
     icon: 'Music',
-    color: 'pink'
+    color: 'primary'
   },
   {
     id: '9',
@@ -117,6 +117,6 @@ export const defaultPlatforms: Platform[] = [
     mainCategory: 'Entertainment',
     subCategory: 'Social Media',
     icon: 'Linkedin',
-    color: 'pink'
+    color: 'primary'
   }
 ];

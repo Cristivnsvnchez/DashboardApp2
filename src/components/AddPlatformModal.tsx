@@ -30,7 +30,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
     mainCategory: '',
     subCategory: '',
     icon: 'Globe',
-    color: 'blue'
+    color: 'primary'
   });
 
   const [availableSubCategories, setAvailableSubCategories] = useState<string[]>([]);
@@ -52,7 +52,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
       ...prev,
       mainCategory,
       subCategory: '',
-      color: category?.color || 'blue'
+      color: category?.color || 'primary'
     }));
   };
 
@@ -67,7 +67,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
         mainCategory: '',
         subCategory: '',
         icon: 'Globe',
-        color: 'blue'
+        color: 'primary'
       });
       setAvailableSubCategories([]);
       onClose();
