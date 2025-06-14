@@ -53,14 +53,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               Main Categories
             </label>
-            {(selectedMainCategory || selectedSubCategory) && (
-              <button
-                onClick={onClearFilters}
-                className="text-xs text-primary hover:text-primary/80 font-medium"
-              >
-                Clear all
-              </button>
-            )}
+              {(selectedMainCategory || selectedSubCategory) && (
+                <button
+                  onClick={onClearFilters}
+                  className="text-xs text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 font-medium"
+                >
+                  Clear all
+                </button>
+              )}
           </div>
           <div className="space-y-2">
             <button
