@@ -54,7 +54,7 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = ({
       {(selectedMainCategory || selectedSubCategory) && (
         <button
           onClick={onClearFilters}
-          className="text-sm text-primary hover:text-primary/80"
+          className="text-sm text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
         >
           Clear
         </button>

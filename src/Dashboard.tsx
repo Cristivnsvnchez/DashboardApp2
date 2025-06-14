@@ -119,21 +119,21 @@ function App() {
                 </button>
                 <button
                   onClick={() => setIsAddModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-primary/40 backdrop-blur-md text-primary dark:text-white rounded-lg hover:bg-primary/50 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-primary/40 backdrop-blur-md text-gray-900 dark:text-white rounded-lg hover:bg-primary/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Platform</span>
                 </button>
                 <button
                   onClick={() => setIsAddCategoryModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-secondary/40 backdrop-blur-md text-secondary dark:text-white rounded-lg hover:bg-secondary/50 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-secondary/40 backdrop-blur-md text-gray-900 dark:text-white rounded-lg hover:bg-secondary/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Category</span>
                 </button>
                 <button
                   onClick={() => setIsAddSubCategoryModalOpen(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-accent/40 backdrop-blur-md text-accent dark:text-white rounded-lg hover:bg-accent/50 transition-colors font-medium shadow-sm hover:shadow-md"
+                  className="flex items-center space-x-2 px-4 py-2 bg-accent/40 backdrop-blur-md text-gray-900 dark:text-white rounded-lg hover:bg-accent/50 transition-colors font-medium shadow-sm hover:shadow-md"
                 >
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Sub Category</span>
@@ -171,12 +171,12 @@ function App() {
                     </span>
                   )}
                 </div>
-                <button
-                  onClick={handleClearFilters}
-                  className="text-primary hover:text-primary/80 font-medium text-sm"
-                >
-                  Clear all filters
-                </button>
+                  <button
+                    onClick={handleClearFilters}
+                    className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 font-medium text-sm"
+                  >
+                    Clear all filters
+                  </button>
               </div>
             </div>
           )}
