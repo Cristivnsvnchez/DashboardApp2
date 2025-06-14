@@ -56,12 +56,14 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform }) => {
             <span className="text-xs text-gray-500">{platform.subCategory}</span>
           </div>
           
-          <button
-            onClick={() => window.open(platform.url, '_blank')}
-            className={`px-4 py-2 bg-gradient-to-r ${colorVariants[platform.color as keyof typeof colorVariants]} text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105`}
+          <a
+            href={platform.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`px-4 py-2 bg-gradient-to-r ${colorVariants[platform.color as keyof typeof colorVariants]} text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105 inline-flex items-center justify-center`}
           >
             Visit
-          </button>
+          </a>
         </div>
       </div>
     </div>
