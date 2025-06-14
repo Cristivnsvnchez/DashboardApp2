@@ -12,6 +12,7 @@ import { FilterDropdown } from './components/FilterDropdown';
 import { EditPlatformModal } from './components/EditPlatformModal';
 import { AddSubCategoryModal } from './components/AddSubCategoryModal';
 import { Toast } from './components/Toast';
+import { SearchInput } from './components/SearchInput';
 import { Platform, Category } from './types';
 import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
@@ -128,10 +129,10 @@ function AppContent() {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <input
-                  type="text"
+                <SearchInput
                   value={search}
-                  onChange={e => setSearch(e.target.value)}
+                  onChange={setSearch}
+                  allPlatforms={platforms}
                   placeholder="Search..."
                   className="hidden md:block px-3 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100"
                 />
@@ -170,10 +171,10 @@ function AppContent() {
 
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6 space-y-4">
-            <input
-              type="text"
+            <SearchInput
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={setSearch}
+              allPlatforms={platforms}
               placeholder="Search..."
               className="md:hidden w-full px-3 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100"
             />
