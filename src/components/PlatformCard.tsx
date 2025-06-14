@@ -1,13 +1,13 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import * as Icons from 'lucide-react';
-import { Platform } from '../types';
+import { Platform, ColorVariant } from '../types';
 
 interface PlatformCardProps {
   platform: Platform;
 }
 
-const colorVariants = {
+const colorVariants: Record<ColorVariant, string> = {
   orange: 'from-orange-500 to-orange-600',
   pink: 'from-pink-500 to-pink-600',
   blue: 'from-blue-500 to-blue-600',
@@ -15,7 +15,7 @@ const colorVariants = {
   green: 'from-green-500 to-green-600'
 };
 
-const hoverVariants = {
+const hoverVariants: Record<ColorVariant, string> = {
   orange: 'hover:from-orange-600 hover:to-orange-700',
   pink: 'hover:from-pink-600 hover:to-pink-700',
   blue: 'hover:from-blue-600 hover:to-blue-700',
