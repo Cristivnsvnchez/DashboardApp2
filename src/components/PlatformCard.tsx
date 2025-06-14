@@ -1,10 +1,11 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Pencil } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { Platform, ColorVariant } from '../types';
 
 interface PlatformCardProps {
   platform: Platform;
+  onEdit: (platform: Platform) => void;
 }
 
 const colorVariants: Record<ColorVariant, string> = {
@@ -23,7 +24,7 @@ const hoverVariants: Record<ColorVariant, string> = {
   green: 'hover:from-green-600 hover:to-green-700'
 };
 
-export const PlatformCard: React.FC<PlatformCardProps> = ({ platform }) => {
+export const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onEdit }) => {
   const IconComponent = (Icons as any)[platform.icon] || Icons.Globe;
   
   return (
@@ -34,7 +35,10 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform }) => {
         className={`h-24 bg-gradient-to-br ${colorVariants[platform.color as keyof typeof colorVariants]} ${hoverVariants[platform.color as keyof typeof hoverVariants]} transition-all duration-300 flex items-center justify-center relative`}
       >
         <IconComponent className="w-8 h-8 text-white" />
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-3 right-3 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button onClick={() => onEdit(platform)} className="p-1" aria-label="Edit">
+            <Pencil className="w-4 h-4 text-white/80" />
+          </button>
           <ExternalLink className="w-4 h-4 text-white/80" />
         </div>
       </div>

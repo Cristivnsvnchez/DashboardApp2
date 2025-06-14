@@ -2,8 +2,10 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Plus, Menu, LayoutDashboard, Sun, Moon } from 'lucide-react';
 import { PlatformCard } from './components/PlatformCard';
 import { AddPlatformModal } from './components/AddPlatformModal';
+import { EditPlatformModal } from './components/EditPlatformModal';
 import { FilterSidebar } from './components/FilterSidebar';
 import { AddCategoryModal } from './components/AddCategoryModal';
+import { AddSubCategoryModal } from './components/AddSubCategoryModal';
 import { Platform, Category } from './types';
 import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
@@ -18,6 +20,9 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
+  const [isAddSubCategoryModalOpen, setIsAddSubCategoryModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [platformToEdit, setPlatformToEdit] = useState<Platform | null>(null);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -64,6 +69,20 @@ function App() {
 
   const handleAddCategory = (category: Category) => {
     setCategories(prev => [...prev, category]);
+  };
+
+  const handleAddSubCategory = (main: string, sub: string) => {
+    setCategories(prev =>
+      prev.map(cat =>
+        cat.main === main && !cat.subs.includes(sub)
+          ? { ...cat, subs: [...cat.subs, sub] }
+          : cat
+      )
+    );
+  };
+
+  const handleUpdatePlatform = (updated: Platform) => {
+    setPlatforms(prev => prev.map(p => (p.id === updated.id ? updated : p)));
   };
 
   const handleClearFilters = () => {
@@ -160,6 +179,13 @@ function App() {
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Category</span>
                 </button>
+                <button
+                  onClick={() => setIsAddSubCategoryModalOpen(true)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-sm hover:shadow-md"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="hidden sm:inline">Add Sub Category</span>
+                </button>
               </div>
             </div>
           </div>
@@ -203,7 +229,14 @@ function App() {
           {filteredPlatforms.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredPlatforms.map(platform => (
-                <PlatformCard key={platform.id} platform={platform} />
+                <PlatformCard
+                  key={platform.id}
+                  platform={platform}
+                  onEdit={p => {
+                    setPlatformToEdit(p);
+                    setIsEditModalOpen(true);
+                  }}
+                />
               ))}
             </div>
           ) : (
@@ -238,10 +271,26 @@ function App() {
         onAdd={handleAddPlatform}
         categories={categories}
       />
+      <EditPlatformModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setPlatformToEdit(null);
+        }}
+        onSave={handleUpdatePlatform}
+        categories={categories}
+        platform={platformToEdit}
+      />
       <AddCategoryModal
         isOpen={isAddCategoryModalOpen}
         onClose={() => setIsAddCategoryModalOpen(false)}
         onAdd={handleAddCategory}
+      />
+      <AddSubCategoryModal
+        isOpen={isAddSubCategoryModalOpen}
+        onClose={() => setIsAddSubCategoryModalOpen(false)}
+        categories={categories}
+        onAdd={handleAddSubCategory}
       />
     </div>
   );
