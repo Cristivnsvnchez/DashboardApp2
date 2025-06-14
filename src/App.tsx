@@ -3,15 +3,21 @@ import { Plus, Menu, LayoutDashboard, Sun, Moon } from 'lucide-react';
 import { PlatformCard } from './components/PlatformCard';
 import { AddPlatformModal } from './components/AddPlatformModal';
 import { FilterSidebar } from './components/FilterSidebar';
-import { Platform } from './types';
-import { defaultPlatforms, categories } from './data/platforms';
+import { AddCategoryModal } from './components/AddCategoryModal';
+import { Platform, Category } from './types';
+import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
 function App() {
   const [platforms, setPlatforms] = useState<Platform[]>(defaultPlatforms);
+  const [categories, setCategories] = useState<Category[]>(() => {
+    const stored = localStorage.getItem('categories');
+    return stored ? JSON.parse(stored) : initialCategories;
+  });
   const [selectedMainCategory, setSelectedMainCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -21,6 +27,10 @@ function App() {
       setIsDarkMode(true);
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('categories', JSON.stringify(categories));
+  }, [categories]);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -50,6 +60,10 @@ function App() {
       id: Date.now().toString()
     };
     setPlatforms(prev => [...prev, platform]);
+  };
+
+  const handleAddCategory = (category: Category) => {
+    setCategories(prev => [...prev, category]);
   };
 
   const handleClearFilters = () => {
@@ -139,6 +153,13 @@ function App() {
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Platform</span>
                 </button>
+                <button
+                  onClick={() => setIsAddCategoryModalOpen(true)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-sm hover:shadow-md"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="hidden sm:inline">Add Category</span>
+                </button>
               </div>
             </div>
           </div>
@@ -216,6 +237,11 @@ function App() {
         onClose={() => setIsAddModalOpen(false)}
         onAdd={handleAddPlatform}
         categories={categories}
+      />
+      <AddCategoryModal
+        isOpen={isAddCategoryModalOpen}
+        onClose={() => setIsAddCategoryModalOpen(false)}
+        onAdd={handleAddCategory}
       />
     </div>
   );
