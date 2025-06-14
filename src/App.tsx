@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Plus, Menu, LayoutDashboard, Sun, Moon } from 'lucide-react';
+import { Plus, LayoutDashboard, Sun, Moon } from 'lucide-react';
 import { PlatformCard } from './components/PlatformCard';
 import { AddPlatformModal } from './components/AddPlatformModal';
-import { FilterSidebar } from './components/FilterSidebar';
 import { AddCategoryModal } from './components/AddCategoryModal';
+import { FilterDropdown } from './components/FilterDropdown';
 import { Platform, Category } from './types';
 import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
@@ -17,7 +17,6 @@ function App() {
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -76,30 +75,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-300 to-blue-500 dark:from-gray-800 dark:via-gray-900 dark:to-black flex">
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:block">
-        <FilterSidebar
-          categories={categories}
-          selectedMainCategory={selectedMainCategory}
-          selectedSubCategory={selectedSubCategory}
-          onMainCategoryChange={handleMainCategoryChange}
-          onSubCategoryChange={setSelectedSubCategory}
-          onClearFilters={handleClearFilters}
-        />
-      </div>
-
-      {/* Mobile Sidebar */}
-      <FilterSidebar
-        categories={categories}
-        selectedMainCategory={selectedMainCategory}
-        selectedSubCategory={selectedSubCategory}
-        onMainCategoryChange={handleMainCategoryChange}
-        onSubCategoryChange={setSelectedSubCategory}
-        onClearFilters={handleClearFilters}
-        isMobile
-        isOpen={isMobileSidebarOpen}
-        onClose={() => setIsMobileSidebarOpen(false)}
-      />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen">
@@ -108,12 +83,6 @@ function App() {
           <div className="px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => setIsMobileSidebarOpen(true)}
-                  className="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                >
-                  <Menu className="w-5 h-5" />
-                </button>
                 <div className="flex items-center space-x-3">
                   <div className="p-2 bg-blue-100 rounded-lg">
                     <LayoutDashboard className="w-6 h-6 text-blue-600" />
@@ -160,6 +129,17 @@ function App() {
 
         {/* Content */}
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
+          <div className="mb-6">
+            <FilterDropdown
+              categories={categories}
+              selectedMainCategory={selectedMainCategory}
+              selectedSubCategory={selectedSubCategory}
+              onMainCategoryChange={handleMainCategoryChange}
+              onSubCategoryChange={setSelectedSubCategory}
+              onClearFilters={handleClearFilters}
+            />
+          </div>
+
           {/* Active Filters */}
           {(selectedMainCategory || selectedSubCategory) && (
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
