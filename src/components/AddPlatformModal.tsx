@@ -22,7 +22,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
   onAdd,
   categories
 }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Omit<Platform, 'id'>>({
     name: '',
     url: '',
     description: '',
