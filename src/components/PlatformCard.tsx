@@ -1,28 +1,15 @@
 import React from 'react';
 import { ExternalLink, Pencil } from 'lucide-react';
 import * as Icons from 'lucide-react';
-import { Platform, ColorVariant } from '../types';
+import { Platform } from '../types';
 
 interface PlatformCardProps {
   platform: Platform;
   onEdit: (platform: Platform) => void;
 }
 
-const colorVariants: Record<ColorVariant, string> = {
-  orange: 'from-orange-500 to-orange-600',
-  pink: 'from-pink-500 to-pink-600',
-  blue: 'from-blue-500 to-blue-600',
-  purple: 'from-purple-500 to-purple-600',
-  green: 'from-green-500 to-green-600'
-};
-
-const hoverVariants: Record<ColorVariant, string> = {
-  orange: 'hover:from-orange-600 hover:to-orange-700',
-  pink: 'hover:from-pink-600 hover:to-pink-700',
-  blue: 'hover:from-blue-600 hover:to-blue-700',
-  purple: 'hover:from-purple-600 hover:to-purple-700',
-  green: 'hover:from-green-600 hover:to-green-700'
-};
+const headerBg =
+  'bg-gradient-to-br from-primary/60 to-primary/80 hover:from-primary/70 hover:to-primary/90';
 
 export const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onEdit }) => {
   const IconComponent = (Icons as any)[platform.icon] || Icons.Globe;
@@ -31,8 +18,8 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onEdit }) 
     <div
       className="group bg-white/80 dark:bg-gray-800/60 backdrop-blur rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-white/60 dark:border-gray-700 overflow-hidden"
     >
-      <div 
-        className={`h-24 bg-gradient-to-br ${colorVariants[platform.color as keyof typeof colorVariants]} ${hoverVariants[platform.color as keyof typeof hoverVariants]} transition-all duration-300 flex items-center justify-center relative`}
+      <div
+        className={`h-24 ${headerBg} transition-all duration-300 flex items-center justify-center relative`}
       >
         <IconComponent className="w-8 h-8 text-white" />
         <div className="absolute top-3 right-3 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -64,7 +51,7 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onEdit }) 
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`px-4 py-2 bg-gradient-to-r ${colorVariants[platform.color as keyof typeof colorVariants]} text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105 inline-flex items-center justify-center`}
+            className="px-4 py-2 bg-primary/80 hover:bg-primary text-white text-sm font-medium rounded-lg hover:shadow-lg transition-all duration-200 transform hover:scale-105 inline-flex items-center justify-center"
           >
             Visit
           </a>

@@ -67,7 +67,7 @@ export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
     const category = categories.find(cat => cat.main === mainCategory);
     setAvailableSubCategories(category?.subs || []);
     setFormData(prev =>
-      prev ? { ...prev, mainCategory, subCategory: '', color: category?.color || 'blue' } : prev
+      prev ? { ...prev, mainCategory, subCategory: '', color: category?.color || 'primary' } : prev
     );
   };
 
