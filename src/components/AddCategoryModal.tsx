@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Plus } from 'lucide-react';
-import { Category, ColorVariant } from '../types';
+import { Category } from '../types';
 
 interface AddCategoryModalProps {
   isOpen: boolean;
@@ -8,14 +8,12 @@ interface AddCategoryModalProps {
   onAdd: (category: Category) => void;
 }
 
-const colorOptions: ColorVariant[] = ['orange', 'pink', 'blue', 'purple', 'green'];
 
 export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({ isOpen, onClose, onAdd }) => {
   const firstFieldRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState<{ main: string; subs: string; color: ColorVariant }>({
+  const [formData, setFormData] = useState<{ main: string; subs: string }>({
     main: '',
-    subs: '',
-    color: 'blue'
+    subs: ''
   });
 
   useEffect(() => {
@@ -37,8 +35,8 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({ isOpen, onCl
       .map(s => s.trim())
       .filter(Boolean);
 
-    onAdd({ main: formData.main.trim(), subs: subsArray, color: formData.color });
-    setFormData({ main: '', subs: '', color: 'blue' });
+    onAdd({ main: formData.main.trim(), subs: subsArray, color: 'blue' });
+    setFormData({ main: '', subs: '' });
     onClose();
   };
 
@@ -88,20 +86,6 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({ isOpen, onCl
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Color</label>
-            <select
-              value={formData.color}
-              onChange={e => setFormData(prev => ({ ...prev, color: e.target.value as ColorVariant }))}
-              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-            >
-              {colorOptions.map(color => (
-                <option key={color} value={color}>
-                  {color.charAt(0).toUpperCase() + color.slice(1)}
-                </option>
-              ))}
-            </select>
-          </div>
 
           <div className="flex justify-end space-x-4 pt-6 border-t border-gray-100 dark:border-gray-700">
             <button
