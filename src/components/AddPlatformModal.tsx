@@ -73,8 +73,10 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
           <button
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            aria-label="Close"
           >
             <X className="w-5 h-5" />
+            <span className="sr-only">Close</span>
           </button>
         </div>
 
@@ -174,14 +176,18 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
                   <button
                     key={iconName}
                     type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, icon: iconName }))}
+                    onClick={() =>
+                      setFormData(prev => ({ ...prev, icon: iconName }))
+                    }
                     className={`p-3 rounded-lg border-2 transition-all hover:scale-105 ${
                       formData.icon === iconName
                         ? 'border-blue-500 bg-blue-50'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
+                    aria-label={iconName}
                   >
                     <IconComponent className="w-5 h-5 mx-auto" />
+                    <span className="sr-only">{iconName}</span>
                   </button>
                 );
               })}
