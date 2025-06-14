@@ -1,75 +1,81 @@
-import React, { useState } from 'react';
-import { X, Plus } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, Pencil } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { Platform, Category } from '../types';
 
-interface AddPlatformModalProps {
+interface EditPlatformModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (platform: Omit<Platform, 'id'>) => void;
+  onSave: (platform: Platform) => void;
   categories: Category[];
+  platform: Platform | null;
 }
 
 const availableIcons = [
-  'Globe', 'Code', 'FileText', 'BookOpen', 'Play', 'Music', 'Github', 'Figma',
-  'Camera', 'Palette', 'Monitor', 'Smartphone', 'Headphones', 'Calendar',
-  'MessageCircle', 'Mail', 'Users', 'Settings', 'Star', 'Heart'
+  'Globe',
+  'Code',
+  'FileText',
+  'BookOpen',
+  'Play',
+  'Music',
+  'Github',
+  'Figma',
+  'Camera',
+  'Palette',
+  'Monitor',
+  'Smartphone',
+  'Headphones',
+  'Calendar',
+  'MessageCircle',
+  'Mail',
+  'Users',
+  'Settings',
+  'Star',
+  'Heart'
 ];
 
-export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
+export const EditPlatformModal: React.FC<EditPlatformModalProps> = ({
   isOpen,
   onClose,
-  onAdd,
-  categories
+  onSave,
+  categories,
+  platform
 }) => {
-  const [formData, setFormData] = useState<Omit<Platform, 'id'>>({
-    name: '',
-    url: '',
-    description: '',
-    mainCategory: '',
-    subCategory: '',
-    icon: 'Globe',
-    color: 'blue'
-  });
-
+  const [formData, setFormData] = useState<Platform | null>(platform);
   const [availableSubCategories, setAvailableSubCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    setFormData(platform);
+    if (platform) {
+      const category = categories.find(cat => cat.main === platform.mainCategory);
+      setAvailableSubCategories(category?.subs || []);
+    }
+  }, [platform, categories]);
 
   const handleMainCategoryChange = (mainCategory: string) => {
     const category = categories.find(cat => cat.main === mainCategory);
     setAvailableSubCategories(category?.subs || []);
-    setFormData(prev => ({
-      ...prev,
-      mainCategory,
-      subCategory: '',
-      color: category?.color || 'blue'
-    }));
+    setFormData(prev =>
+      prev ? { ...prev, mainCategory, subCategory: '', color: category?.color || 'blue' } : prev
+    );
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData) return;
     if (formData.name && formData.url && formData.mainCategory) {
-      onAdd(formData);
-      setFormData({
-        name: '',
-        url: '',
-        description: '',
-        mainCategory: '',
-        subCategory: '',
-        icon: 'Globe',
-        color: 'blue'
-      });
-      setAvailableSubCategories([]);
+      onSave(formData);
       onClose();
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !formData) return null;
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white/80 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-700">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Add New Platform</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Edit Platform</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
@@ -89,7 +95,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                onChange={e => setFormData(prev => (prev ? { ...prev, name: e.target.value } : prev))}
                 className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="e.g., GitHub"
                 required
@@ -103,7 +109,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
               <input
                 type="url"
                 value={formData.url}
-                onChange={(e) => setFormData(prev => ({ ...prev, url: e.target.value }))}
+                onChange={e => setFormData(prev => (prev ? { ...prev, url: e.target.value } : prev))}
                 className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="https://example.com"
                 required
@@ -117,7 +123,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
             </label>
             <textarea
               value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              onChange={e => setFormData(prev => (prev ? { ...prev, description: e.target.value } : prev))}
               rows={3}
               className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
               placeholder="Brief description of the platform..."
@@ -131,7 +137,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
               </label>
               <select
                 value={formData.mainCategory}
-                onChange={(e) => handleMainCategoryChange(e.target.value)}
+                onChange={e => handleMainCategoryChange(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 required
               >
@@ -145,12 +151,12 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
             </div>
 
             <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                 Sub Category
               </label>
               <select
                 value={formData.subCategory}
-                onChange={(e) => setFormData(prev => ({ ...prev, subCategory: e.target.value }))}
+                onChange={e => setFormData(prev => (prev ? { ...prev, subCategory: e.target.value } : prev))}
                 className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 disabled={!formData.mainCategory}
               >
@@ -175,9 +181,7 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
                   <button
                     key={iconName}
                     type="button"
-                    onClick={() =>
-                      setFormData(prev => ({ ...prev, icon: iconName }))
-                    }
+                    onClick={() => setFormData(prev => (prev ? { ...prev, icon: iconName } : prev))}
                     className={`p-3 rounded-lg border-2 transition-all hover:scale-105 ${
                       formData.icon === iconName
                         ? 'border-blue-500 bg-blue-50'
@@ -205,8 +209,8 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
               type="submit"
               className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors flex items-center space-x-2"
             >
-              <Plus className="w-4 h-4" />
-              <span>Add Platform</span>
+              <Pencil className="w-4 h-4" />
+              <span>Update Platform</span>
             </button>
           </div>
         </form>
