@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Plus } from 'lucide-react';
+import * as Icons from 'lucide-react';
 import { Category } from '../types';
 
 interface AddCategoryModalProps {
@@ -19,10 +20,18 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({
   categories,
 }) => {
   const firstFieldRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState<{ main: string; subs: string }>({
+  const [formData, setFormData] = useState<{ main: string; subs: string; icon: string }>({
     main: '',
-    subs: ''
+    subs: '',
+    icon: 'Star'
   });
+  const [iconSearch, setIconSearch] = useState('');
+
+  const availableIcons = [
+    'Globe', 'Code', 'FileText', 'BookOpen', 'Play', 'Music', 'Github', 'Figma',
+    'Camera', 'Palette', 'Monitor', 'Smartphone', 'Headphones', 'Calendar',
+    'MessageCircle', 'Mail', 'Users', 'Settings', 'Star', 'Heart'
+  ];
 
   useEffect(() => {
     if (!isOpen) return;
@@ -43,8 +52,8 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({
       .map(s => s.trim())
       .filter(Boolean);
 
-    onAdd({ main: formData.main.trim(), subs: subsArray, color: 'primary' });
-    setFormData({ main: '', subs: '' });
+    onAdd({ main: formData.main.trim(), subs: subsArray, color: 'primary', icon: formData.icon });
+    setFormData({ main: '', subs: '', icon: 'Star' });
     onClose();
   };
 
@@ -94,6 +103,40 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({
             />
           </div>
 
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+              Icon
+            </label>
+            <input
+              type="text"
+              value={iconSearch}
+              onChange={e => setIconSearch(e.target.value)}
+              placeholder="Search icon..."
+              className="w-full mb-3 px-4 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-gray-100"
+            />
+            <div className="grid grid-cols-8 gap-2 max-h-40 overflow-y-auto">
+              {availableIcons
+                .filter(icon => icon.toLowerCase().includes(iconSearch.toLowerCase()))
+                .map(iconName => {
+                  const IconComp = (Icons as any)[iconName];
+                  return (
+                    <button
+                      type="button"
+                      key={iconName}
+                      onClick={() => setFormData(prev => ({ ...prev, icon: iconName }))}
+                      className={`p-2 rounded-lg border-2 ${
+                        formData.icon === iconName
+                          ? 'border-secondary bg-secondary/10'
+                          : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
+                      }`}
+                    >
+                      <IconComp className="w-4 h-4 mx-auto" />
+                    </button>
+                  );
+                })}
+            </div>
+          </div>
+
 
           <div className="flex justify-end space-x-4 pt-6 border-t border-gray-100 dark:border-gray-700">
             <button
@@ -115,12 +158,18 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({
         <div className="p-6 pt-0">
           <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-gray-100">Delete Category</h3>
           <ul className="space-y-2 max-h-40 overflow-y-auto">
-            {categories.map(cat => (
-              <li key={cat.main} className="flex justify-between items-center bg-white/60 dark:bg-gray-700/50 px-3 py-1 rounded">
-                <span>{cat.main}</span>
-                <button type="button" onClick={() => onDelete(cat.main)} className="text-red-600 hover:underline text-sm">Delete</button>
-              </li>
-            ))}
+            {categories.map(cat => {
+              const IconDel = (Icons as any)[cat.icon] || Icons.Folder;
+              return (
+                <li key={cat.main} className="flex justify-between items-center bg-white/60 dark:bg-gray-700/50 px-3 py-1 rounded">
+                  <div className="flex items-center space-x-2">
+                    <IconDel className="w-4 h-4" />
+                    <span>{cat.main}</span>
+                  </div>
+                  <button type="button" onClick={() => onDelete(cat.main)} className="text-red-600 hover:underline text-sm">Delete</button>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
