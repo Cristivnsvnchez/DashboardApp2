@@ -7,6 +7,8 @@ interface AddPlatformModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAdd: (platform: Omit<Platform, 'id'>) => void;
+  onDelete: (id: string) => void;
+  platforms: Platform[];
   categories: Category[];
 }
 
@@ -20,6 +22,8 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
   isOpen,
   onClose,
   onAdd,
+  onDelete,
+  platforms,
   categories
 }) => {
   const firstFieldRef = useRef<HTMLInputElement>(null);
@@ -222,6 +226,19 @@ export const AddPlatformModal: React.FC<AddPlatformModalProps> = ({
             </button>
           </div>
         </form>
+        <div className="p-6 pt-0">
+          <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-gray-100">Delete Platform</h3>
+          <ul className="space-y-2 max-h-40 overflow-y-auto">
+            {platforms.map(p => (
+              <li key={p.id} className="flex justify-between items-center bg-white/60 dark:bg-gray-700/50 px-3 py-1 rounded">
+                <span>{p.name}</span>
+                <button type="button" onClick={() => onDelete(p.id)} className="text-red-600 hover:underline text-sm">
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

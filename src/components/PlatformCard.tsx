@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExternalLink, Pencil } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { Platform } from '../types';
 
@@ -22,11 +22,10 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onEdit }) 
         className={`h-24 ${headerBg} transition-all duration-300 flex items-center justify-center relative`}
       >
         <IconComponent className="w-8 h-8 text-white" />
-        <div className="absolute top-3 right-3 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute top-3 right-3 flex opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button onClick={() => onEdit(platform)} className="p-1" aria-label="Edit">
             <Pencil className="w-4 h-4 text-white/80" />
           </button>
-          <ExternalLink className="w-4 h-4 text-white/80" />
         </div>
       </div>
       

@@ -6,10 +6,18 @@ interface AddCategoryModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAdd: (category: Category) => void;
+  onDelete: (main: string) => void;
+  categories: Category[];
 }
 
 
-export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({ isOpen, onClose, onAdd }) => {
+export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({
+  isOpen,
+  onClose,
+  onAdd,
+  onDelete,
+  categories,
+}) => {
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<{ main: string; subs: string }>({
     main: '',
@@ -104,6 +112,17 @@ export const AddCategoryModal: React.FC<AddCategoryModalProps> = ({ isOpen, onCl
             </button>
           </div>
         </form>
+        <div className="p-6 pt-0">
+          <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-gray-100">Delete Category</h3>
+          <ul className="space-y-2 max-h-40 overflow-y-auto">
+            {categories.map(cat => (
+              <li key={cat.main} className="flex justify-between items-center bg-white/60 dark:bg-gray-700/50 px-3 py-1 rounded">
+                <span>{cat.main}</span>
+                <button type="button" onClick={() => onDelete(cat.main)} className="text-red-600 hover:underline text-sm">Delete</button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
