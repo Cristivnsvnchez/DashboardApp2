@@ -4,6 +4,8 @@ import { PlatformCard } from './components/PlatformCard';
 import { AddPlatformModal } from './components/AddPlatformModal';
 import { AddCategoryModal } from './components/AddCategoryModal';
 import { FilterDropdown } from './components/FilterDropdown';
+import { EditPlatformModal } from './components/EditPlatformModal';
+import { AddSubCategoryModal } from './components/AddSubCategoryModal';
 import { Platform, Category } from './types';
 import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
@@ -17,6 +19,9 @@ function App() {
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
+  const [isAddSubCategoryModalOpen, setIsAddSubCategoryModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [platformToEdit, setPlatformToEdit] = useState<Platform | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -42,11 +47,8 @@ function App() {
 
   const filteredPlatforms = useMemo(() => {
     return platforms.filter(platform => {
-      const matchesMainCategory = !selectedMainCategory ||
-        platform.mainCategory === selectedMainCategory;
-      const matchesSubCategory = !selectedSubCategory ||
-        platform.subCategory === selectedSubCategory;
-
+      const matchesMainCategory = !selectedMainCategory || platform.mainCategory === selectedMainCategory;
+      const matchesSubCategory = !selectedSubCategory || platform.subCategory === selectedSubCategory;
       return matchesMainCategory && matchesSubCategory;
     });
   }, [platforms, selectedMainCategory, selectedSubCategory]);
@@ -54,13 +56,27 @@ function App() {
   const handleAddPlatform = (newPlatform: Omit<Platform, 'id'>) => {
     const platform: Platform = {
       ...newPlatform,
-      id: Date.now().toString()
+      id: Date.now().toString(),
     };
     setPlatforms(prev => [...prev, platform]);
   };
 
   const handleAddCategory = (category: Category) => {
     setCategories(prev => [...prev, category]);
+  };
+
+  const handleAddSubCategory = (main: string, sub: string) => {
+    setCategories(prev =>
+      prev.map(cat =>
+        cat.main === main && !cat.subs.includes(sub)
+          ? { ...cat, subs: [...cat.subs, sub] }
+          : cat
+      )
+    );
+  };
+
+  const handleUpdatePlatform = (updated: Platform) => {
+    setPlatforms(prev => prev.map(p => (p.id === updated.id ? updated : p)));
   };
 
   const handleClearFilters = () => {
@@ -75,10 +91,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-200 via-blue-300 to-blue-500 dark:from-gray-800 dark:via-gray-900 dark:to-black flex">
-
-      {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen">
-        {/* Header */}
         <header className="bg-white/80 dark:bg-gray-800/70 backdrop-blur border-b border-gray-200 dark:border-gray-700 shadow-sm">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
@@ -95,18 +108,14 @@ function App() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex items-center space-x-4">
                 <button
                   onClick={() => setIsDarkMode(!isDarkMode)}
                   className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                   aria-label="Toggle dark mode"
                 >
-                  {isDarkMode ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
+                  {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </button>
                 <button
                   onClick={() => setIsAddModalOpen(true)}
@@ -122,12 +131,18 @@ function App() {
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Add Category</span>
                 </button>
+                <button
+                  onClick={() => setIsAddSubCategoryModalOpen(true)}
+                  className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-sm hover:shadow-md"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="hidden sm:inline">Add Sub Category</span>
+                </button>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Content */}
         <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
             <FilterDropdown
@@ -140,7 +155,6 @@ function App() {
             />
           </div>
 
-          {/* Active Filters */}
           {(selectedMainCategory || selectedSubCategory) && (
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <div className="flex items-center justify-between">
@@ -167,11 +181,17 @@ function App() {
             </div>
           )}
 
-          {/* Platform Grid */}
           {filteredPlatforms.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredPlatforms.map(platform => (
-                <PlatformCard key={platform.id} platform={platform} />
+                <PlatformCard
+                  key={platform.id}
+                  platform={platform}
+                  onEdit={p => {
+                    setPlatformToEdit(p);
+                    setIsEditModalOpen(true);
+                  }}
+                />
               ))}
             </div>
           ) : (
@@ -199,17 +219,32 @@ function App() {
         </main>
       </div>
 
-      {/* Add Platform Modal */}
       <AddPlatformModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onAdd={handleAddPlatform}
         categories={categories}
       />
+      <EditPlatformModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setPlatformToEdit(null);
+        }}
+        onSave={handleUpdatePlatform}
+        categories={categories}
+        platform={platformToEdit}
+      />
       <AddCategoryModal
         isOpen={isAddCategoryModalOpen}
         onClose={() => setIsAddCategoryModalOpen(false)}
         onAdd={handleAddCategory}
+      />
+      <AddSubCategoryModal
+        isOpen={isAddSubCategoryModalOpen}
+        onClose={() => setIsAddSubCategoryModalOpen(false)}
+        categories={categories}
+        onAdd={handleAddSubCategory}
       />
     </div>
   );
