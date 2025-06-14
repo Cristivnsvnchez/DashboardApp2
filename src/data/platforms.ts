@@ -4,27 +4,32 @@ export const categories: Category[] = [
   {
     main: 'Productivity',
     subs: ['Task Management', 'Note Taking', 'Time Tracking', 'Communication', 'File Storage'],
-    color: 'primary'
+    color: 'primary',
+    icon: 'Calendar'
   },
   {
     main: 'Entertainment',
     subs: ['Streaming', 'Gaming', 'Social Media', 'Music', 'Reading'],
-    color: 'primary'
+    color: 'primary',
+    icon: 'Play'
   },
   {
     main: 'Learning',
     subs: ['Coding', 'Languages', 'Courses', 'Documentation', 'Tutorials'],
-    color: 'primary'
+    color: 'primary',
+    icon: 'BookOpen'
   },
   {
     main: 'Design',
     subs: ['Graphics', 'UI/UX', 'Photography', 'Icons', 'Inspiration'],
-    color: 'primary'
+    color: 'primary',
+    icon: 'Palette'
   },
   {
     main: 'Development',
     subs: ['Code Editors', 'Version Control', 'Hosting', 'APIs', 'Tools'],
-    color: 'primary'
+    color: 'primary',
+    icon: 'Code'
   }
 ];
 

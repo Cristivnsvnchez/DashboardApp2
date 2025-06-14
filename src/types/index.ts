@@ -15,4 +15,5 @@ export interface Category {
   main: string;
   subs: string[];
   color: ColorVariant;
+  icon: string;
 }
