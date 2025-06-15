@@ -14,6 +14,7 @@ import { AddSubCategoryModal } from './components/AddSubCategoryModal';
 import { Toast } from './components/Toast';
 import { SearchInput } from './components/SearchInput';
 import { SideBanner } from './components/SideBanner';
+import { ChatAssistant } from './components/ChatAssistant';
 import { Platform, Category } from './types';
 import { defaultPlatforms, categories as initialCategories } from './data/platforms';
 
@@ -257,6 +258,7 @@ function AppContent() {
           onAdd={handleAddSubCategory}
           onDelete={handleDeleteSubCategory}
         />
+        <ChatAssistant categories={categories} platforms={platforms} />
         {toastMessage && <Toast message={toastMessage} onClose={() => setToastMessage('')} />}
       </div>
     </div>
