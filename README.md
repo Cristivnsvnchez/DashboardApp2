@@ -52,8 +52,12 @@ Make sure to update `src/authConfig.ts` with your **Azure application client ID*
 
 ## AI Assistant
 
-To use the built-in chat assistant for platform suggestions, create a `.env` file with your OpenAI API key:
+To enable the chat assistant for platform suggestions:
+
+1. Copy `.env.example` to `.env` in the project root.
+2. Add your OpenAI API key to the `VITE_OPENAI_API_KEY` variable.
 
 ```bash
+# .env
 VITE_OPENAI_API_KEY=your-key-here
 ```
