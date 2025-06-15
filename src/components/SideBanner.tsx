@@ -37,6 +37,12 @@ export const SideBanner: React.FC<SideBannerProps> = ({
       >
         Sub Category
       </button>
+      <button
+        onClick={() => window.dispatchEvent(new Event('open-chat-assistant'))}
+        className="w-full px-4 py-2 bg-primary/60 backdrop-blur-md text-gray-900 dark:text-white rounded-lg hover:bg-primary/70 transition-colors font-medium shadow-sm hover:shadow-md"
+      >
+        Suggest Platform
+      </button>
     </div>
   );
 };

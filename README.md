@@ -49,3 +49,11 @@ npm run preview
 This project now includes a Microsoft single sign-on (SSO) flow using MSAL.
 Unauthenticated users are greeted with a minimal login page featuring a centered card and a **"Sign in with Microsoft"** button for a smoother experience.
 Make sure to update `src/authConfig.ts` with your **Azure application client ID** before running the app.
+
+## AI Assistant
+
+To use the built-in chat assistant for platform suggestions, create a `.env` file with your OpenAI API key:
+
+```bash
+VITE_OPENAI_API_KEY=your-key-here
+```
